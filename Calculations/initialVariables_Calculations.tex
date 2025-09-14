@@ -7,6 +7,9 @@
 \renewcommand*\familydefault{\ttdefault}
 \usepackage[T1]{fontenc}
 
+\numberwithin{equation}{section}
+
+
 \title{Rocket Nozzle Equations}
 \author{Ben Calow}
 \date{September 14, 2025.}
@@ -63,46 +66,67 @@
 
 \pagebreak
 
-\section{Thermodynamic Relations\hfil\cite{RPE}}
+\section[Thermodynamic Relations]{Thermodynamic Relations\hfil\cite{RPE}}
 
 \subsection{Gas Constant}
-\begin{equation} \tag{1.1} \label{1.1}
+\begin{equation} \label{eq: gas constant}
     R = \frac{R'}{M}
 \end{equation}
 
 \subsection{Sonic Velocity}
-\begin{equation} \tag{1.2} \label{1.2}
+\begin{equation} \label{eq: sonic velocity}
     c = \sqrt{\gamma R T}
 \end{equation}
 
 \subsection{Isentropic Flow Relation}
-\begin{equation} \tag{1.3} \label{1.3}
+\begin{equation} \label{eq: flow relation}
     \frac{T_x}{T_y} = \left(\frac{P_x}{P_y}\right) ^ {\frac{\gamma}{\gamma - 1}}
 \end{equation}
 
 \subsection{Isentropic Total To Static Temperature Relation}
-\begin{equation} \tag{1.4} \label{1.4}
+\begin{equation} \label{eq: temperature relation}
     0 = \frac{T}{T_0} \left[1 + \frac{1}{2} \left(\gamma - 1\right) Ma ^ 2\right]
 \end{equation}
 
 \subsection{Isentropic Total To Static Pressure Relation}
-\begin{equation} \tag{1.5} \label{1.5}
+\begin{equation} \label{eq: pressure relation}
     0 = \frac{P}{P_0} \left[1 + \frac{1}{2} \left(\gamma - 1\right) Ma ^ 2\right] ^ {\frac{\gamma}{\gamma - 1}}
 \end{equation}
 
+\subsection{Isentropic Nozzle Area Ratio}
+The Isentropic Nozzle Area Ratio Calculation 
+\begin{equation} \label{eq: area ratio}
+    \frac{A_y}{A_x} = \frac{Ma_x}{Ma_y} \sqrt{\left\{\frac{1 + \left[\frac{\gamma - 1}{2}\right] Ma_y ^ 2}{1 + \left[\frac{\gamma - 1}{2}\right] Ma_x ^ 2}\right\} ^ {\frac{\gamma + 1}{\gamma - 1}}}
+\end{equation}
+
 \subsection{Isentropic Mach Number}
-Equations \eqref{1.4} and \eqref{1.5} can be rearranged to solve for \\
+Equations \eqref{eq: temperature relation} and \eqref{eq: pressure relation} can be rearranged to solve for \\
 the Mach Number
-\begin{equation} \tag{1.6a} \label{1.6a}
+\begin{equation} \label{1.6a}
     Ma = \sqrt{\frac{2}{\gamma - 1} \left(\frac{T_0}{T} - 1\right)}
 \end{equation}
-\begin{equation} \tag{1.6b} \label{1.6b}
+\begin{equation} \label{1.6b}
     Ma = \sqrt{\frac{2}{\gamma - 1} \left(\frac{P_0}{P} ^ {\frac{\gamma - 1}{\gamma}} - 1\right)}
 \end{equation}
 
-\subsection{Isentropic Nozzle Area Ratio}
-\begin{equation} \tag{1.7} \label{1.7}
-    \frac{A_y}{A_x} = \frac{Ma_x}{Ma_y} \sqrt{\left\{\frac{1 + \left[\frac{\gamma - 1}{2}\right] Ma_y ^ 2}{1 + \left[\frac{\gamma - 1}{2}\right] Ma_x ^ 2}\right\} ^ {\frac{\gamma + 1}{\gamma - 1}}}
+
+\pagebreak
+
+\section[Isentropic Flow]{Isentropic Flow\hfil\cite{RPE}}
+
+\subsection{Isentropic Exit Velocity}
+\begin{equation} \label{eq: exit velocity}
+    v_e = \sqrt{\frac{2 \gamma}{\gamma - 1} R T_0 \left[1 - \left(\frac{P_e}{P_0}\right) ^ {\frac{\gamma - 1}{\gamma}}\right]}
+\end{equation}
+
+\subsection{Choked Mass Flow Rate}
+\begin{equation} \label{eq: mass flow}
+    \dot{m} = A_t P_0 \gamma \frac{\sqrt{\frac{2}{\gamma + 1} ^ {\frac{\gamma + 1}{\gamma - 1}}}}{\sqrt{\gamma R T_0}}
+\end{equation}
+
+\subsection{Thrust}
+\begin{equation} \label{eq: thrust}
+    F = \dot{m} v_e + \left(P_e - P_a\right) A_e
 \end{equation}
 
 
