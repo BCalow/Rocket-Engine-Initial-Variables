@@ -11,8 +11,53 @@
 
 \begin{document}
 \maketitle
+\thispagestyle{empty}
 
-Here is a reference to the book \cite{RPE}.
+\pagebreak
+
+\setcounter{page}{1}
+
+\tableofcontents
+
+\pagebreak
+
+\begingroup
+\begin{center}
+    \fbox{
+        \begin{tabular}{ll}
+            \multicolumn{2}{l}{\textbf{Nomenclature}}\\
+            \\
+            $A$ & \qquad Area\\
+            $C_f$ & \qquad Vacuum thrust coefficient\\
+            $c_s$ & \qquad Speed of sound\\
+            $\dot{m}$ & \qquad Mass flow rate\\
+            $M$ & \qquad Molar mass\\
+            $Ma$ & \qquad Mach number\\
+            $mol\%$ & \qquad Mole percentage\\
+            $P$ & \qquad Pressure\\
+            $R$ & \qquad Gas constant\\
+            $R_s$ & \qquad Specific gas constant\\
+            $T$ & \qquad Temperature\\
+            $v$ & \qquad Velocity\\
+            $\epsilon$ & \qquad Nozzle area ratio\\
+            $\gamma$ & \qquad Ratio of specific heats\\
+            $\rho$ & \qquad Density\\
+            \\
+            \multicolumn{2}{l}{\textbf{Subscripts}}\\
+            $_a$ & \qquad Ambient\\
+            $_c$ & \qquad Chamber\\
+            $_e$ & \qquad Exit\\
+            $_t$ & \qquad Throat\\
+            $_x$ & \qquad Current Position\\
+            $_0$ & \qquad Stagnation\\
+        \end{tabular}
+    }
+\end{center}
+\endgroup
+
+\pagebreak
+
+\cite{RPE}
 
 \bibliographystyle{IEEEtran}
 \bibliography{initialVariables_References}
