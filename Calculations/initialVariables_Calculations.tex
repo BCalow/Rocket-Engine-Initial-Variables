@@ -1,6 +1,8 @@
 \documentclass{article}
 
-\usepackage{lmodern}
+\usepackage{lmodern,
+            amsmath            
+}
 \usepackage[hyphens]{url}
 \renewcommand*\familydefault{\ttdefault}
 \usepackage[T1]{fontenc}
@@ -52,7 +54,7 @@
             $_c$ & \qquad Chamber\\
             $_e$ & \qquad Exit\\
             $_t$ & \qquad Throat\\
-            $_x$ & \qquad Current Position\\
+            $_{x, y}$ & \qquad Given Position\\
             $_0$ & \qquad Stagnation\\
         \end{tabular}
     }
@@ -64,7 +66,20 @@
 
 \section{Thermodynamic Relations\hfil\cite{RPE}}
 
+\subsection{Isentropic Flow Relation}
+\begin{equation} \tag{1.1}
+    \frac{T_x}{T_y} = \left(\frac{P_x}{P_y}\right) ^ {\frac{\gamma}{\gamma - 1}}
+\end{equation}
+
 \subsection{Isentropic Total To Static Temperature Relation}
+\begin{equation} \tag{1.2}
+    0 = \frac{T}{T_0} \left[1 + \frac{1}{2} \left(\gamma - 1\right) Ma ^ 2\right]
+\end{equation}
+
+\subsection{Isentropic Total To Static Pressure Relation}
+\begin{equation} \tag{1.3}
+    0 = \frac{P}{P_0} \left[1 + \frac{1}{2} \left(\gamma - 1\right) Ma ^ 2\right] ^ {\frac{\gamma}{\gamma - 1}}
+\end{equation}
 
 
 \pagebreak
