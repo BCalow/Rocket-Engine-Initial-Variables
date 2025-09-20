@@ -5,6 +5,23 @@ QCheckBox, QLabel
 import sys
 
 
+#TEMP
+#Variables left to find
+R = 0
+M = 0
+T_0 = 0
+T_c = 0
+T_t = 0
+T_e = 0
+P_0 = 0
+P_c = 0
+P_t = 0
+P_e = 0
+gamma = 0
+Ma_e = 0
+
+#Input Variables
+
 chamberInputs = [
    #["Name",                    "Symbol",   "Unit"  ],
     ["Chamber Temperature",     "T_c",      "°C"    ],
@@ -24,11 +41,33 @@ exitInputs = [
     ["Exit Temperature",        "T_e",      "°C"    ],
     ["Exit Pressure",           "P_e",      "kPa"   ],
     ["Exit Mach Number",        "Ma_e",     "-"     ],
-    
+]
+
+stagnationInputs = [
+   #["Name",                    "Symbol",   "Unit"  ],
+    ["Stagnation Temperature",  "T_0",      "°C"    ],
+    ["Stagnation Pressure",     "P_0",      "kPa"   ],
 ]
 
 generalInputs = [
    #["Name",                    "Symbol",   "Unit"  ],
     ["Ratio of Specific Heats", "γ",        "-"     ],
     ["Specific Gas Constant",   "R",        "-"     ],
+]
+
+
+#Equation Variable Lists
+
+equationVariables = [
+    [R, M],                     #eq 1.1
+
+    [T_0, T_c],                 #eq 1.4 @ Chamber
+    [T_0, T_t, gamma],          #eq 1.4 @ Throat
+    [T_0, T_e, Ma_e, gamma],    #eq 1.4 @ Exit
+
+    [P_0, P_c],                 #eq 1.5 @ Chamber
+    [P_0, P_t, gamma],          #eq 1.5 @ Throat
+    [P_0, P_e, Ma_e, gamma],    #eq 1.5 @ Exit
+
+    []
 ]
