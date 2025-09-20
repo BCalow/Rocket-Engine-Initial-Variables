@@ -19,6 +19,13 @@ P_t = 0
 P_e = 0
 gamma = 0
 Ma_e = 0
+A_e = 0
+A_t = 0
+v_e = 0
+mdot = 0
+F = 0
+P_a = 0
+
 
 #Input Variables
 
@@ -59,15 +66,21 @@ generalInputs = [
 #Equation Variable Lists
 
 equationVariables = [
-    [R, M],                     #eq 1.1
+    [R, M],                             #eq 1.1
 
-    [T_0, T_c],                 #eq 1.4 @ Chamber
-    [T_0, T_t, gamma],          #eq 1.4 @ Throat
-    [T_0, T_e, Ma_e, gamma],    #eq 1.4 @ Exit
+    [T_0, T_c],                         #eq 1.4 @ Chamber
+    [T_0, T_t, gamma],                  #eq 1.4 @ Throat
+    [T_0, T_e, Ma_e, gamma],            #eq 1.4 @ Exit
 
-    [P_0, P_c],                 #eq 1.5 @ Chamber
-    [P_0, P_t, gamma],          #eq 1.5 @ Throat
-    [P_0, P_e, Ma_e, gamma],    #eq 1.5 @ Exit
+    [P_0, P_c],                         #eq 1.5 @ Chamber
+    [P_0, P_t, gamma],                  #eq 1.5 @ Throat
+    [P_0, P_e, Ma_e, gamma],            #eq 1.5 @ Exit
 
-    []
+    [A_e, A_t, Ma_e, gamma],            #eq 1.6 @ Throat + Exit
+
+    [v_e, R, T_0, P_e, P_0, gamma],     #eq 2.1
+
+    [mdot, A_t, P_0, R, T_0, gamma],    #eq 2.2
+
+    [F, mdot, v_e, P_e, P_a, A_e],      #eq 2.3
 ]
