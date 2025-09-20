@@ -84,3 +84,20 @@ equationVariables = [
 
     [F, mdot, v_e, P_e, P_a, A_e],      #eq 2.3
 ]
+
+
+#Functions
+
+def checkOverconstraint(equationVariables, selectedVariables):
+    constrainedVariables = []
+    changed = True
+
+    while changed:
+        changed = False
+        for group in equationVariables:
+            missingVariables = group - selectedVariables
+            if len(missingVariables) == 1:
+                constrainedVariables.append(missingVariables)
+                changed = True
+    
+    return set(constrainedVariables)
