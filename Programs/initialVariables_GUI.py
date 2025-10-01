@@ -9,10 +9,13 @@ from PyQt6.QtWidgets import (
 							QLineEdit,
 							QGroupBox,
 							QSizePolicy,
-							
+							QSpacerItem,
 )
 from PyQt6.QtGui import(
 						QFontMetrics
+)
+from PyQt6.QtCore import(
+						Qt
 )
 import sys
 
@@ -74,6 +77,14 @@ generalInputs_vars = [
 	["Specific Gas Constant",   "R",        "(-)"     ],
 ]
 
+allInputs_vars = [
+	chamberInputs_vars,
+	throatInputs_vars,
+	exitInputs_vars,
+	stagnationInputs_vars,
+	generalInputs_vars
+]
+
 
 #Equation Variable Lists
 
@@ -122,7 +133,7 @@ def checkConstraint(equationVariables, selectedVariables):
 #Input Section
 
 class dataInput(QWidget):
-	def __init__(self, text=None, parent=None):
+	def __init__(self, text=None, widths=None, parent=None):
 		super().__init__(parent)
 		layout = QGridLayout(self)
 
@@ -131,21 +142,29 @@ class dataInput(QWidget):
 
 		self.name = QLabel(text[0] if text and len(text) > 1 else "")
 
+		self.symbol = QLabel(text[1] if text and len(text) > 1 else "")
+
 		self.unit = QLabel(text[2] if text and len(text) > 1 else "")
 
 		self.input = QLineEdit()
 		self.input.setEnabled(False)
-		self.input.setFixedWidth(80)
+		self.input.setFixedWidth(120)
 		self.input.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+		self.input.setAlignment(Qt.AlignmentFlag.AlignRight)
+
+		if widths:
+			self.name.setFixedWidth(widths[0])
+			self.symbol.setFixedWidth(widths[1])
+			self.unit.setFixedWidth(widths[1])
 
 		layout.addWidget(self.checkbox, 0, 0, 1, 1)
 		layout.addWidget(self.name, 0, 1, 1, 1)
-		layout.addWidget(self.input, 0, 2, 1, 1)
-		layout.addWidget(self.unit, 0, 3, 1, 1)
+		layout.addWidget(self.symbol, 0, 2, 1, 1)
+		layout.addWidget(self.unit, 0, 3, 1, 1)		
+		layout.addWidget(self.input, 0, 4, 1, 1)
 
-		layout.setColumnStretch(1, 1)
-		layout.setColumnStretch(2, 0)
-		layout.setColumnStretch(3, 0)
+		layout.setHorizontalSpacing(20)
+		layout.setVerticalSpacing(5)
 
 		self.checkbox.stateChanged.connect(self.inputToggle)
 
@@ -173,7 +192,17 @@ class mainWindow(QWidget):
 		self.setWindowTitle("Initial Variable Calculation")
 		self.resize(1000, 500)
 
-		mainLayout = QGridLayout()
+		mainLayout = QHBoxLayout()
+
+		gridLayout = QGridLayout()
+
+		fm = QFontMetrics(QLabel().font())
+
+		self.column_widths = (
+			max(fm.horizontalAdvance(row[0]) for group in allInputs_vars for row in group) + 20,
+			max(fm.horizontalAdvance(row[1]) for group in allInputs_vars for row in group) + 20,
+			max(fm.horizontalAdvance(row[2]) for group in allInputs_vars for row in group) + 20
+		)
 
 		def addGroup(layout, row, col, title, data):
 			group = QGroupBox(title)
@@ -181,17 +210,22 @@ class mainWindow(QWidget):
 			group.setLayout(groupLayout)
 
 			for i, vars in enumerate(data):
-				section = dataInput(vars)
+				section = dataInput(vars, self.column_widths)
 				groupLayout.addWidget(section)
+
+			group.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
 
 			layout.addWidget(group, row, col)
 
-		addGroup(mainLayout, 0, 0, "Chamber", chamberInputs_vars)
-		addGroup(mainLayout, 1, 0, "Throat", throatInputs_vars)
-		addGroup(mainLayout, 2, 0, "Exit", exitInputs_vars)
-		addGroup(mainLayout, 0, 1, "Stagnation", stagnationInputs_vars)
-		addGroup(mainLayout, 1, 1, "General", generalInputs_vars)
+		addGroup(gridLayout, 0, 0, "Chamber", chamberInputs_vars)
+		addGroup(gridLayout, 1, 0, "Throat", throatInputs_vars)
+		addGroup(gridLayout, 2, 0, "Exit", exitInputs_vars)
+		addGroup(gridLayout, 3, 0, "Stagnation", stagnationInputs_vars)
+		addGroup(gridLayout, 4, 0, "General", generalInputs_vars)
 
+		mainLayout.addLayout(gridLayout)
+		mainLayout.addSpacerItem(QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum))
+		
 		self.setLayout(mainLayout)
 
 
