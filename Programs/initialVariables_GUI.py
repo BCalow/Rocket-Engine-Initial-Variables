@@ -149,7 +149,7 @@ class dataInput(QWidget):
 			self.setEnabled(enabled)
 
 	def setDerived(self):
-		self.checkbox.setChecked(False)
+		self.checkbox.setChecked(True)
 		self.checkbox.setEnabled(False)
 		self.input.setEnabled(False)
 		self.input.setText(None)
@@ -218,21 +218,33 @@ class mainWindow(QWidget):
 		mainLayout.addSpacerItem(QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum))
 		
 		self.setLayout(mainLayout)
+
+	def clearDerived(self):
+		for var_id in self.derived:
+			w = self.inputValues[var_id]
+			w.setStyleSheet("")
+			w.checkbox.setEnabled(True)
+		self.derived.clear()
 	
 	def selectedSet(self):
 		return {var_id for var_id, widget in self.inputValues.items() if widget.isChecked()}
 	
 	def onToggle(self, var_id: str, checked: bool):
-		selected = self.selectedSet()
+		selected = self.selectedSet()	
 		changed = True
+
+		self.clearDerived()
 
 		while changed:
 			changed = False
+			knownVars = selected | self.derived
 			for eq in eqVars:
-				unkownVars = eq - selected - self.derived
-				if unkownVars == 1:
+				unknownVars = eq - knownVars
+				if len(unknownVars) == 1:
 					changed = True
-					self.derived.update(unkownVars)
+					derivedVar = next(iter(unknownVars))
+					self.derived.add(derivedVar)
+					self.inputValues[derivedVar].setDerived()
 
 
 
