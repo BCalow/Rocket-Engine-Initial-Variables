@@ -219,12 +219,21 @@ class mainWindow(QWidget):
 		
 		self.setLayout(mainLayout)
 	
-	def selectedSet(self) -> set[str]:
+	def selectedSet(self):
 		return {var_id for var_id, widget in self.inputValues.items() if widget.isChecked()}
 	
 	def onToggle(self, var_id: str, checked: bool):
-		print(f"{var_id} toggled -> {checked}")
-		print("Now selected: ", self.selectedSet())
+		selected = self.selectedSet()
+		changed = True
+
+		while changed:
+			changed = False
+			for eq in eqVars:
+				unkownVars = eq - selected - self.derived
+				if unkownVars == 1:
+					changed = True
+					self.derived.update(unkownVars)
+
 
 
 #Main	
