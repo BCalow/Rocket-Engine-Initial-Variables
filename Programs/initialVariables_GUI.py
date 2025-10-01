@@ -15,7 +15,8 @@ from PyQt6.QtGui import(
 						QFontMetrics
 )
 from PyQt6.QtCore import(
-						Qt
+						Qt,
+						pyqtSignal
 )
 import sys
 
@@ -24,11 +25,11 @@ import sys
 #Variables left to find
 R = 0
 M = 0
-T_0 = 0
+T_s = 0
 T_c = 0
 T_t = 0
 T_e = 0
-P_0 = 0
+P_s = 0
 P_c = 0
 P_t = 0
 P_e = 0
@@ -88,24 +89,18 @@ allInputs_vars = [
 
 #Equation Variable Lists
 
-equationVariables = [
-	[R, M],                             #eq 1.1
-
-	[T_0, T_c],                         #eq 1.4 @ Chamber
-	[T_0, T_t, gamma],                  #eq 1.4 @ Throat
-	[T_0, T_e, Ma_e, gamma],            #eq 1.4 @ Exit
-
-	[P_0, P_c],                         #eq 1.5 @ Chamber
-	[P_0, P_t, gamma],                  #eq 1.5 @ Throat
-	[P_0, P_e, Ma_e, gamma],            #eq 1.5 @ Exit
-
-	[A_e, A_t, Ma_e, gamma],            #eq 1.6 @ Throat + Exit
-
-	[v_e, R, T_0, P_e, P_0, gamma],     #eq 2.1
-
-	[mdot, A_t, P_0, R, T_0, gamma],    #eq 2.2
-
-	[F, mdot, v_e, P_e, P_a, A_e],      #eq 2.3
+EQS = [
+    frozenset({"R", "M"}),                         	 		# eq 1.1
+    frozenset({"T_0", "T_c"}),                      		# eq 1.4 @ Chamber
+    frozenset({"T_0", "T_t", "γ"}),                 		# eq 1.4 @ Throat
+    frozenset({"T_0", "T_e", "Ma_e", "γ"}),         		# eq 1.4 @ Exit
+    frozenset({"P_0", "P_c"}),                      		# eq 1.5 @ Chamber
+    frozenset({"P_0", "P_t", "γ"}),                 		# eq 1.5 @ Throat
+    frozenset({"P_0", "P_e", "Ma_e", "γ"}),         		# eq 1.5 @ Exit
+    frozenset({"A_e", "A_t", "Ma_e", "γ"}),         		# eq 1.6 Throat+Exit
+    frozenset({"v_e", "R", "T_0", "P_e", "P_0", "γ"}),  	# eq 2.1
+    frozenset({"mdot", "A_t", "P_0", "R", "T_0", "γ"}), 	# eq 2.2
+    frozenset({"F", "mdot", "v_e", "P_e", "P_a", "A_e"})	# eq 2.3
 ]
 
 
@@ -155,7 +150,7 @@ class dataInput(QWidget):
 		if widths:
 			self.name.setFixedWidth(widths[0])
 			self.symbol.setFixedWidth(widths[1])
-			self.unit.setFixedWidth(widths[1])
+			self.unit.setFixedWidth(widths[2])
 
 		layout.addWidget(self.checkbox, 0, 0, 1, 1)
 		layout.addWidget(self.name, 0, 1, 1, 1)
